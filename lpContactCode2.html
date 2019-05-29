@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+	<head>
+	<meta charset="UTF-8">
+	<title>Untitled Document</title>
+	<script src="https://unpkg.com/vue"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.1.1/iframeResizer.min.js"></script>
+	</head>
+
+	<body>
+    <section class="row1ColContact row1ColContact__align--right row1ColContact__style--black" id="contactRow">
+      <div class="rowContent">
+        <div class="rowMedia" :style="{ backgroundImage: 'url(' + createImgUrl(id) + ')' }">
+						<div class="rowImage"> <img v-bind:src="createImgUrl(id)"> </div>
+					</div>
+        <div class="rowText">
+          <h1 class="rowTitle"><h1>{{name}}</h1>
+          <h3 class="rowSubtitle">
+							<a :href="'mailto:' + id + '@edgewood.edu'">{{id}}@edgewood.edu</a>
+							<br><a :href="'callto:' + phone">{{phone}}</a></h3>
+          <iframe frameborder="0" scrolling="no"  v-bind:src="createFormUrl(formName, id)" style="width: 100%; overflow: hidden; height: 236px;" id="formstack" @load="iframeLoaded"> </iframe>
+        </div>
+      </div>
+		</section>
+		<script>
+new Vue({
+    el: '#contactRow',
+    data: {
+        formName: 'lpContact',
+        id: 'jeastman',
+        name: 'Joann Eastman',
+        phone: '(608) 663-3250',
+        contactID: 'jeastman'
+    },
+    computed: {
+    },
+    methods: {
+        createImgUrl: function(locImg) {
+            return 'https://cdn.edgewood.edu/facstaff/' + locImg + '/images/square-assets/256x256_72dpi.jpg'
+        },
+        createFormUrl: function (formName, id) {
+            return 'https://edgewood-college.formstack.com/forms/' + formName + '?emailto=' + id + '@edgewood.edu&page=' + window.location.href;
+        },
+				iframeLoaded: function () {
+					console.log('iframe loaded');
+           iFrameResize({log: false}, '#formstack')
+    }
+    }
+})
+
+</script>
+</body>
+</html>
